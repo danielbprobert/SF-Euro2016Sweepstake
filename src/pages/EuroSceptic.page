@@ -1,0 +1,74 @@
+<apex:page standardController="Euro_Team__c" extensions="euroregisterrun" showHeader="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <title>Euro 2016 - Sweepstake Registration</title>
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS104, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+</head>
+<body>
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">
+    <div class="slds-page-header" role="banner">
+      <div class="slds-grid">
+        <div class="slds-col slds-has-flexi-truncate">
+          <div class="slds-media slds-media--center slds-no-space slds-grow">
+            <div class="slds-media__figure">
+              <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#user')}"></use>
+              </svg>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-heading--label">Euro's 2016</p>
+              <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Registration">Registration</h1>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+          <div class="slds-button-group" role="group">
+            <a class="slds-button slds-button--neutral" href="/apex/EuroStatus">Tournament Tracker</a>
+            <a class="slds-button slds-button--neutral" href="/apex/EuroFixtures">Fixture List</a>
+            <a class="slds-button slds-button--neutral" href="/apex/EuroMyTeam">My Team</a>
+          </div>
+        </div>
+      </div>
+      <ul class="slds-grid slds-page-header__detail-row">
+        <li class="slds-page-header__detail-block">
+          <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small">Camfed Euro 2016 Sweepstakes</p>
+        </li>
+      </ul>
+    </div>
+    <apex:form >
+    <apex:actionFunction name="doupdateteam" action="{!updateteam}" rerender="allPanel"/>
+    <apex:outputPanel id="allPanel">
+      <apex:outputPanel rendered="{!NOT(initialised)}">
+        <p align="center" style='{font-family:"Arial", Helvetica, sans-serif; font-size:20px;}'><apex:image value="/img/loading.gif"/>&nbsp;Please wait</p>
+        <script>
+           window.onload=function()
+           {
+             doupdateteam();
+           };
+        </script>
+      </apex:outputPanel>
+      <apex:outputPanel rendered="{!initialised}">
+        <div class="slds-box slds-theme--error" style="{!IF(someonehasgotthisone,"","display:none")}">
+          <p>Ah too late someone has already got this team sorry, quick get back and grab a different one. {!Euro_Team__c.Name} is registered to {!Euro_Team__c.User__r.FirstName} {!Euro_Team__c.User__r.LastName}</p>
+        </div>
+        <div class="slds-box slds-theme--error" style="{!IF(youallreadyhaveateam,"","display:none")}">
+          <p>Hang on your already have a team registered, you can't be greedy and register 2 teams.</p>
+        </div>
+        
+        <div class="slds-box slds-theme--success" style="{!IF(success,"","display:none")}">
+          <p>Congratulation you have now registered your team as {!Euro_Team__c.Name}.</p>
+        </div>
+        <div class="slds-box slds-theme--success" style="{!IF(thisisyourteam,"","display:none")}">
+          <p>This is your team you don't need to register it again!</p>
+        </div>
+      </apex:outputPanel>
+    </apex:outputPanel>
+  </apex:form>
+   
+  </div>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,9 @@
+Import Data into Salesforce
+
+1. Login to Dataloader.io
+2. Insert file 1-groupinsert.csv into the Object Euro_Group__c
+3. Insert file 2-teamimport.csv into the Object Euro_Team__c - ensure for Euro_Group__c you tick the box to lookup based on the name field
+4. Insert file 3-gameinsert.csv into the Object Euro_Match__c - ensure for Euro_Group__c/Home_Team__c/Away_Team__c you tick the box to lookup based on the Name field. Check your time settings, this file is in us form mm/dd/yyyy
+
+Now check in Salesforce and see your data.
+

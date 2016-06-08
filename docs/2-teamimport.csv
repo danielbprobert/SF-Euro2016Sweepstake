@@ -1,0 +1,55 @@
+Dummy Team,Euro Group,Euro Team Name,Odds,Odds Simple
+FALSE,Group A,Albania,300/1,300
+FALSE,Group A,France,3/1,3
+FALSE,Group A,Romania,150/1,150
+FALSE,Group A,Switzerland,50/1,50
+FALSE,Group B,England,8/1,8
+FALSE,Group B,Russia,66/1,66
+FALSE,Group B,Slovakia,150/1,150
+FALSE,Group B,Wales,66/1,66
+FALSE,Group C,Germany,4/1,4
+FALSE,Group C,Northern Ireland,250/1,250
+FALSE,Group C,Ukraine,80/1,80
+FALSE,Group D,Croatia,25/1,25
+FALSE,Group D,Czech Republic,50/1,50
+FALSE,Group D,Spain,5/1,5
+FALSE,Group D,Turkey,66/1,66
+FALSE,Group E,Belgium,11/1,11
+FALSE,Group E,Italy,18/1,18
+FALSE,Group E,Repulic of Ireland,100/1,100
+FALSE,Group E,Sweden,100/1,100
+FALSE,Group F,Austria,33/1,33
+FALSE,Group F,Hungary,250/1,250
+FALSE,Group F,Iceland,80/1,80
+FALSE,Group C,Poland,50/1,50
+FALSE,Group F,Portugal,14/1,14
+TRUE,,1st group A,,
+TRUE,,1st group B,,
+TRUE,,1st group C,,
+TRUE,,1st group D,,
+TRUE,,1st group E,,
+TRUE,,1st group F,,
+TRUE,,2nd group A,,
+TRUE,,2nd group B,,
+TRUE,,2nd group C,,
+TRUE,,2nd group D,,
+TRUE,,2nd group E,,
+TRUE,,2nd group F,,
+TRUE,,3rd group A B F,,
+TRUE,,3rd group A C D,,
+TRUE,,3rd group B E F,,
+TRUE,,3rd group C D E,,
+TRUE,,Winner Match 1,,
+TRUE,,Winner Match 2,,
+TRUE,,Winner Match 3,,
+TRUE,,Winner Match 4,,
+TRUE,,Winner Match 5,,
+TRUE,,Winner Match 6,,
+TRUE,,Winner Match 7,,
+TRUE,,Winner Match 8,,
+TRUE,,Winner Quarter Final 1,,
+TRUE,,Winner Quarter Final 2,,
+TRUE,,Winner Quarter Final 3,,
+TRUE,,Winner Quarter Final 4,,
+TRUE,,Winner Semi Final 1,,
+TRUE,,Winner Semi Final 2,,

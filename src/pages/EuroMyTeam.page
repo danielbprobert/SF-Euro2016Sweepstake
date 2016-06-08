@@ -1,0 +1,76 @@
+<apex:page controller="euromyteam" showHeader="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <title>Euro 2016 - My Team</title>
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS104, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+</head>
+<body>
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">
+    <div class="slds-page-header" role="banner">
+      <div class="slds-grid">
+        <div class="slds-col slds-has-flexi-truncate">
+          <div class="slds-media slds-media--center slds-no-space slds-grow">
+            <div class="slds-media__figure">
+              <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#opportunity')}"></use>
+              </svg>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-heading--label">Euro's 2016</p>
+              <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Euro 2016 Full Fixtures List">Euro 2016 - {!myteam.name}</h1>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+          <div class="slds-button-group" role="group">
+            <a class="slds-button slds-button--neutral" href="/apex/EuroRegister">Registration</a>
+            <a class="slds-button slds-button--neutral" href="/apex/EuroStatus">Tournament Tracker</a>
+            <a class="slds-button slds-button--neutral" href="/apex/EuroFixtures">Fixtures</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slds-m-vertical--large"></div>
+  <div class="slds-page-header" role="banner">
+    <div class="slds-media slds-media--center">
+      <div class="slds-media__figure">
+        <svg aria-hidden="true" class="slds-icon slds-icon-standard-opportunity">
+          <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#lead')}"></use>
+        </svg>
+      </div>
+      <div class="slds-media__body">
+        <p class="slds-page-header__title slds-truncate slds-align-middle" title="Fixtures">Fixtures</p>
+      </div>
+    </div>
+  </div> 
+    <div class="slds-card">
+      <div class="slds-grid slds-wrap slds-grid--pull-padded">
+          <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+            <div class="slds-card__body">
+              <table class="slds-table slds-table--bordered" >
+              <tbody>
+                <apex:repeat value="{!fixtures}" var="fix">
+                <tr class="slds-hint-parent">
+                    <td class="slds-truncate" scope="row">{!if(fix.Knockout_rounds__c!=null,fix.Knockout_rounds__c,fix.Euro_Group__r.Name)}</td>
+                  <td class="slds-truncate" scope="row">{!fix.Home_Team__r.Name}</td>
+                  <td class="slds-truncate" scope="row">{!if(fix.Result__c,fix.Home_Goals__c,"")}</td>
+                  <td class="slds-truncate" scope="row">{!if(fix.Result__c,"-","vs")}</td>
+                  <td class="slds-truncate" scope="row">{!if(fix.Result__c,fix.Away_Goals__c,"")}</td>
+                  <td class="slds-truncate" scope="row">{!fix.Away_Team__r.Name}</td>
+                  <td class="slds-truncate" scope="row">{!fix.Kick_Off__c}</td>
+                  <td class="slds-truncate" scope="row">{!fix.Ground__c}</td>
+                </tr>
+                </apex:repeat>
+              </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+</apex:page>

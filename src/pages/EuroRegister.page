@@ -1,0 +1,118 @@
+<apex:page controller="euroregister" showHeader="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <title>Euro 2016 - Sweepstake Registration</title>
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS104, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <meta http-equiv="refresh" content="20" />
+</head>
+<body>
+<apex:form >
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">
+    <div class="slds-page-header" role="banner">
+      <div class="slds-grid">
+        <div class="slds-col slds-has-flexi-truncate">
+          <div class="slds-media slds-media--center slds-no-space slds-grow">
+            <div class="slds-media__figure">
+              <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#user')}"></use>
+              </svg>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-heading--label">Euro's 2016</p>
+              <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Sweepstake Registration">Sweepstake Registration</h1>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+          <div class="slds-button-group" role="group">
+            <a class="slds-button slds-button--neutral" href="/apex/EuroStatus">Tournament Tracker</a>
+            <a class="slds-button slds-button--neutral" href="/apex/EuroFixtures">Fixture List</a>
+            <a class="slds-button slds-button--neutral" style="{!if(myteam.size==1,"","display:none")}" href="/apex/EuroMyTeam">My Team</a>
+          </div>
+        </div>
+      </div>
+      <ul class="slds-grid slds-page-header__detail-row">
+        <li class="slds-page-header__detail-block">
+          <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small">Camfed Euro 2016 Sweepstakes</p>
+              <p class="slds-text-body--regular">24 teams available, £1 for an entry - pick your team quickly before the best ones are taken.</p>
+              <p class="slds-text-body--regular" style="{!if(availableteams.size>0,"","display:none")}">Just press the button below and make sure you hand over your pound.</p>
+              <p class="slds-text-body--regular">Look out for messages as your team progresses or is knocked out in the chatter group <a href="https://na8.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9C0000000Tvah">here</a></p>
+               <p class="slds-text-body--regular" style="{!if(availableteams.size==0,"","display:none")}">Wow that was quick all teams have gone!</p>
+        </li>
+      </ul>
+    </div>
+    <div class="slds-m-vertical--large"></div>
+    <div class="slds-grid slds-grid--align-center" style="{!if(availableteams.size>0,"","display:none")}">
+        <div><apex:commandlink styleClass="slds-button slds-button--brand" action="{!selectmeateam}" value="Randomly Pick Me a Team" rendered="{!if(myteam.size==1,false,true)}"/></div>
+    </div>
+    <div class="slds-m-vertical--large"></div>
+    <div class="slds-card">
+      <div class="slds-grid slds-wrap slds-grid--pull-padded">
+          <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2" style="{!if(availableteams.size>0,"","display:none")}">
+            <div class="slds-card__header slds-grid">
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+ 
+                    <div class="slds-media__body">
+                        <h2 class="slds-text-heading--small slds-truncate">Available Teams</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table--bordered" >
+                <thead>
+                  <tr>
+                    <th scope="col"><div class="slds-truncate">Team</div></th>
+                    <th scope="col"><div class="slds-truncate">The Bookies Odds</div></th>
+                </tr>
+              </thead>
+              <tbody>
+                <apex:repeat value="{!availableteams}" var="available">
+                <tr class="slds-hint-parent">
+                  <td class="slds-truncate" scope="row" data-label="Team">{!available.Name}</td>
+                  <td class="slds-truncate" scope="row" data-label="Odds">{!available.Odds__c}</td>
+                </tr>
+                </apex:repeat>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2" style="{!if(takenteams.size>0,"","display:none")}">
+            <div class="slds-card__header slds-grid">
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+ 
+                    <div class="slds-media__body">
+                        <h2 class="slds-text-heading--small slds-truncate">Already Taken Teams</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table--bordered" >
+                <thead>
+                  <tr>
+                    <th scope="col"><div class="slds-truncate">Team</div></th>
+                    <th scope="col"><div class="slds-truncate">The Bookies Odds</div></th>
+                    <th scope="col"><div class="slds-truncate">Who</div></th>
+                </tr>
+              </thead>
+              <tbody>
+                <apex:repeat value="{!takenteams}" var="taken">
+                <tr class="slds-hint-parent">
+                  <td class="slds-truncate" scope="row" data-label="Team">{!taken.Name}</td>
+                  <td class="slds-truncate" scope="row" data-label="Odds">{!taken.Odds__c}</td>
+                  <td class="slds-truncate" scope="row" data-label="Odds">{!taken.User__r.Name}</td>
+                </tr>
+                </apex:repeat>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</apex:form>
+</body>
+</html>
+</apex:page>

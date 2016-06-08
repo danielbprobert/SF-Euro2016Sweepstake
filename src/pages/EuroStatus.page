@@ -1,0 +1,267 @@
+<apex:page controller="eurodetails" showHeader="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <title>Euro 2016 - Progress Chart</title>
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS104, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <apex:includeScript value="https://code.jquery.com/jquery-2.2.4.min.js" />
+</head>
+<body>
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">
+  <div class="slds-page-header" role="banner">
+      <div class="slds-grid">
+        <div class="slds-col slds-has-flexi-truncate">
+          <div class="slds-media slds-media--center slds-no-space slds-grow">
+            <div class="slds-media__figure">
+              <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#opportunity')}"></use>
+              </svg>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-heading--label">European Championships 2016</p>
+              <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Tournament Tracker">Tournament Tracker</h1>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+          <div class="slds-button-group" role="group">
+            <a class="slds-button slds-button--neutral" href="/apex/EuroRegister">Registration</a>
+            <a class="slds-button slds-button--neutral" href="/apex/EuroFixtures">Fixture List</a>
+            <a class="slds-button slds-button--neutral" style="{!if(myteam.size==1,"","display:none")}" href="/apex/EuroMyTeam">My Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="slds-m-vertical--large"></div>
+
+    <div class="slds-tabs--default">
+        <ul class="slds-tabs--default__nav" role="tablist">
+            <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Group Stages" role="presentation"><a class="slds-tabs--default__link" href="#void" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item" onclick="selectTab(this);">Group Stages</a></li>
+            <li class="slds-tabs--default__item slds-text-heading--label" title="Round of 16" role="presentation"><a class="slds-tabs--default__link" href="#void" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item" onclick="selectTab(this);">Round of 16</a></li>
+            <li class="slds-tabs--default__item slds-text-heading--label" title="Quarter Finals" role="presentation"><a class="slds-tabs--default__link" href="#void" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item" onclick="selectTab(this);">Quarter Finals</a></li>
+            <li class="slds-tabs--default__item slds-text-heading--label" title="Semi Finals" role="presentation"><a class="slds-tabs--default__link" href="#void" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-4" id="tab-default-4__item" onclick="selectTab(this);">Semi Finals</a></li>
+            <li class="slds-tabs--default__item slds-text-heading--label" title="Final" role="presentation"><a class="slds-tabs--default__link" href="#void" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-5" id="tab-default-5__item" onclick="selectTab(this);">Final</a></li>
+        </ul>
+        <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+          <div class="slds-card">
+            <div class="slds-grid slds-wrap slds-grid--pull-padded">
+              <apex:repeat value="{!eurogroups}" var="group">
+                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                  <div class="slds-card__header slds-grid">
+                      <div class="slds-media slds-media--center slds-has-flexi-truncate">
+       
+                          <div class="slds-media__body">
+                              <h2 class="slds-text-heading--small slds-truncate">{!group.Name}</h2>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="slds-card__body">
+                    <table class="slds-table slds-table--bordered" >
+                      <thead>
+                        <tr>
+                          <th scope="col"><div class="slds-truncate">Team</div></th>
+                          <th scope="col"><div class="slds-truncate">P</div></th>
+                          <th scope="col"><div class="slds-truncate">W</div></th>
+                          <th scope="col"><div class="slds-truncate">D</div></th>
+                          <th scope="col"><div class="slds-truncate">L</div></th>
+                          <th scope="col"><div class="slds-truncate">GF</div></th>
+                          <th scope="col"><div class="slds-truncate">GA</div></th>
+                          <th scope="col"><div class="slds-truncate">GD</div></th>
+                          <th scope="col"><div class="slds-truncate">Pts</div></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <apex:repeat value="{!group.Euro_Teams__r}" var="team">
+                      <tr class="slds-hint-parent">
+                        <th class="slds-truncate" scope="row" data-label="Team">{!team.Name}</th>
+                        <th class="slds-truncate" scope="row" data-label="P">{!team.Group_Played__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="W">{!team.Group_Won__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="D">{!team.Group_Drawn__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="L">{!team.Group_Lost__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="GF">{!team.Group_Goals_For__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="GA">{!team.Group_Goals_Against__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="GD">{!team.Group_Goal_Difference__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="Pts">{!team.Group_Points__c}</th>
+                      </tr>
+                      </apex:repeat>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="slds-m-vertical--large"></div>
+                  <div class="slds-card__header slds-grid">
+                      <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                          <div class="slds-media__body">
+                              <h2 class="slds-text-heading--small slds-truncate">{!group.Name} Fixtures</h2>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="slds-m-vertical--large"></div>
+                  <table class="slds-table slds-table--bordered" >
+                      <!--<thead>
+                        <tr>
+                          <th scope="col"><div class="slds-truncate">Home Team</div></th>
+                          <th scope="col"><div class="slds-truncate">Goals</div></th>
+                          <th scope="col"><div class="slds-truncate"></div></th>
+                          <th scope="col"><div class="slds-truncate">Goals</div></th>
+                          <th scope="col"><div class="slds-truncate">Away Teams</div></th>
+                          <th scope="col"><div class="slds-truncate">GF</div></th>
+                          <th scope="col"><div class="slds-truncate">GA</div></th>
+                          <th scope="col"><div class="slds-truncate">GD</div></th>
+                          <th scope="col"><div class="slds-truncate">Pts</div></th>
+                      </tr>
+                    </thead>-->
+                    <tbody>
+                  <apex:repeat value="{!group.Euro_Matches__r}" var="matches">
+                    <tr class="slds-hint-parent">
+                        <th class="slds-truncate" scope="row" data-label="Home Team">{!matches.Home_Team__r.Name}</th>
+                        <th class="slds-truncate" scope="row" data-label="Goals">{!if(matches.Result__c,matches.Home_Goals__c,"")}</th>
+                        <th class="slds-truncate" scope="row" data-label="vs">{!if(!matches.result__c,"vs","-")}</th>
+                        <th class="slds-truncate" scope="row" data-label="Goals">{!if(matches.Result__c,matches.Away_Goals__c,"")}</th>
+                        <th class="slds-truncate" scope="row" data-label="Away Team">{!matches.Away_Team__r.Name}</th>
+                        <th class="slds-truncate" scope="row" data-label="">{!matches.Kick_Off__c}</th>
+                        <th class="slds-truncate" scope="row" data-label="GA">{!matches.Ground__c}</th>
+                      </tr>
+                      </apex:repeat>
+                      </tbody>
+                    </table>
+                    <div class="slds-m-vertical--large"></div>
+              </div>
+              </apex:repeat>
+            </div>
+          </div>
+        </div>
+        <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">    
+          <div class="slds-grid slds-wrap">
+            <apex:repeat value="{!roundof16}" var="r16">
+              <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4">
+                <div class="slds-card slds-card--narrow slds-m-around--medium">
+                  <div class="slds-card__header slds-grid">
+                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                      <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                          <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#lead')}"></use>
+                        </svg>
+                      </div>
+                      <div class="slds-media__body slds-truncate"><span class="slds-text-heading--small">{!r16.Name}</span></div>
+                    </div>
+                  </div>
+                  <div class="slds-card__body slds-text-align--center">{!r16.Home_Team__r.Name} vs {!r16.Away_Team__r.Name}</div>
+                  <div class="slds-card__footer">{!r16.Ground__c}<br/>{!r16.Kick_Off__c}</div>
+                </div>
+              </div>
+            </apex:repeat>
+          </div>
+        </div>
+        <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">
+          <div class="slds-grid slds-wrap">
+            <apex:repeat value="{!quarters}" var="quart">
+              <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4">
+                <div class="slds-card slds-card--narrow slds-m-around--medium">
+                  <div class="slds-card__header slds-grid">
+                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                      <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                          <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#lead')}"></use>
+                        </svg>
+                      </div>
+                      <div class="slds-media__body slds-truncate"><span class="slds-text-heading--small">{!quart.Name}</span></div>
+                    </div>
+                  </div>
+                  <div class="slds-card__body slds-text-align--center">{!quart.Home_Team__r.Name} vs {!quart.Away_Team__r.Name}</div>
+                  <div class="slds-card__footer">{!quart.Ground__c}<br/>{!quart.Kick_Off__c}</div>
+                </div>
+              </div>
+            </apex:repeat>
+          </div>
+        </div>
+        <div id="tab-default-4" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-4__item">
+          <div class="slds-grid slds-wrap slds-grid--align-center">
+            <apex:repeat value="{!semis}" var="semi">
+              <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4">
+                <div class="slds-card slds-card--narrow slds-m-around--medium">
+                  <div class="slds-card__header slds-grid">
+                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                      <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                          <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#lead')}"></use>
+                        </svg>
+                      </div>
+                      <div class="slds-media__body slds-truncate"><span class="slds-text-heading--small">{!semi.Name}</span></div>
+                    </div>
+                  </div>
+                  <div class="slds-card__body slds-text-align--center">{!semi.Home_Team__r.Name} vs {!semi.Away_Team__r.Name}</div>
+                  <div class="slds-card__footer">{!semi.Ground__c}<br/>{!semi.Kick_Off__c}</div>
+                </div>
+              </div>
+            </apex:repeat>
+          </div>
+        </div>
+        <div id="tab-default-5" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-5__item">
+          <div class="slds-grid slds-grid--align-center">
+            <apex:repeat value="{!grandfinal}" var="gf">
+              <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4">
+                <div class="slds-card slds-card--narrow slds-m-around--medium">
+                  <div class="slds-card__header slds-grid">
+                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                      <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                          <use xlink:href="{!URLFOR($Resource.SLDS104, '/assets/icons/standard-sprite/svg/symbols.svg#lead')}"></use>
+                        </svg>
+                      </div>
+                      <div class="slds-media__body slds-truncate"><span class="slds-text-heading--small">{!gf.Name}</span></div>
+                    </div>
+                  </div>
+                  <div class="slds-card__body slds-text-align--center">{!gf.Home_Team__r.Name} vs {!gf.Away_Team__r.Name}</div>
+                  <div class="slds-card__footer">{!gf.Ground__c}<br/>{!gf.Kick_Off__c}</div>
+                </div>
+              </div>
+            </apex:repeat>
+            </div>
+          </div>
+        </div>
+    </div> 
+    
+    <div class="slds-m-vertical--large"></div>
+    
+    
+    
+    <div class="slds-m-vertical--large"></div>
+    
+    
+    
+    <div class="slds-m-vertical--large"></div>
+    
+    
+    
+    <div class="slds-m-vertical--large"></div>
+    
+    
+  <script>
+function selectTab(elmnt) {
+    // slds-active
+    $(elmnt).parent("li").siblings(".slds-active").removeClass("slds-active");
+    $(elmnt).parent("li").addClass("slds-active");
+
+    // tabindex
+    $(elmnt).parent("li").siblings().children("a").attr("tabindex", -1);
+    $(elmnt).attr("tabindex", 0);
+
+    // aria-selected
+    $(elmnt).parent("li").siblings().children("a").attr("aria-selected", false);
+    $(elmnt).attr("aria-selected", true);
+
+    // hiding previouly selected tab (slds-show/slds-hide)
+    $(elmnt).closest(".slds-tabs--default").children("div[role='tabpanel'].slds-show").addClass("slds-hide");
+    $(elmnt).closest(".slds-tabs--default").children("div[role='tabpanel'].slds-show").removeClass("slds-show");
+    // displaying newly selected tab (slds-show/slds-hide)
+    $(elmnt).closest(".slds-tabs--default").children("div[aria-labelledby='"+elmnt.id+"']").addClass("slds-show");
+    $(elmnt).closest(".slds-tabs--default").children("div[aria-labelledby='"+elmnt.id+"']").removeClass("slds-hide");
+}
+</script> 
+</body>
+</html>
+</apex:page>

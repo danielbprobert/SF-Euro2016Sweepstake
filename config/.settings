@@ -1,0 +1,20 @@
+{
+    "username": "danielbprobert@gmail.com", 
+    "environment": "developer", 
+    "project_name": "SF-Euro2016Sweepstake", 
+    "workspace": "C:\\Users\\dprobert\\OneDrive\\Documents\\GitHub\\SalesforceProjects", 
+    "org_url": "", 
+    "namespace": "", 
+    "id": "NTYX6P9BTGVZ8NKWEA8NR8QT3GK23HHC", 
+    "metadata_container": "1dc24000000KBegAAG", 
+    "subscription": [
+        "ApexClass", 
+        "ApexPage", 
+        "ApexTrigger", 
+        "CustomApplication", 
+        "CustomObject", 
+        "CustomTab", 
+        "PermissionSet", 
+        "StaticResource"
+    ]
+}
